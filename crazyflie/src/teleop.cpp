@@ -1,6 +1,7 @@
 #include <memory>
 #include <vector>
 #include <chrono>
+#define _USE_MATH_DEFINES
 #include <math.h>
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/joy.hpp"

@@ -2,6 +2,7 @@
 #include <vector>
 #include <regex>
 
+#define _USE_MATH_DEFINES
 #include <crazyflie_cpp/Crazyflie.h>
 
 #include <rclcpp/rclcpp.hpp>
@@ -21,6 +22,11 @@
 #include "crazyflie_interfaces/msg/full_state.hpp"
 #include "crazyflie_interfaces/msg/position.hpp"
 #include "crazyflie_interfaces/msg/log_data_generic.hpp"
+
+// Ignore __attirbute__ in non-GUN compiler
+#ifndef __GNUC__
+#define __attribute__(x)
+#endif
 
 using std::placeholders::_1;
 using std::placeholders::_2;
@@ -87,19 +93,33 @@ std::set<std::string> extract_names(
 class CrazyflieROS
 {
 private:
+#ifndef __GNUC__
+#pragma pack(push)
+#pragma pack(1)
+#endif
   struct logPose {
     float x;
     float y;
     float z;
     int32_t quatCompressed;
   } __attribute__((packed));
+#ifndef __GNUC__
+#pragma pack(pop)
+#endif
 
+#ifndef __GNUC__
+#pragma pack(push)
+#pragma pack(1)
+#endif
   struct logScan {
     uint16_t front;
     uint16_t left;
     uint16_t back;
     uint16_t right;
   } __attribute__((packed));
+#ifndef __GNUC__
+#pragma pack(pop)
+#endif
 
 public:
   CrazyflieROS(
